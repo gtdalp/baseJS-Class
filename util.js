@@ -165,10 +165,10 @@ var XSUtil = {
     timeDifference : function(publishTime){
         var timeNow = Date.parse(new Date())
           , d = (timeNow - publishTime)/1000
-          , d_seconds = parseInt(d);      // 秒
-          , d_minutes = parseInt(d/60);   // 分
-          , d_hours = parseInt(d/3600);   // 时   
-          , d_days = parseInt(d/86400);   // 天
+          , d_seconds = parseInt(d)      // 秒
+          , d_minutes = parseInt(d/60)   // 分
+          , d_hours = parseInt(d/3600)   // 时   
+          , d_days = parseInt(d/86400)   // 天
           ;
 
         if(d_days > 0 && d_days < 4) {       
