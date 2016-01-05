@@ -294,7 +294,7 @@ var XSUtil = {
     * @return       {boolean}     验证通过返回true  验证失败返回false
     *
     ***********************/
-    getIsUrlState = function(URL) { 
+    getIsUrlState: function(URL) { 
         var xmlhttp = new ActiveXObject("microsoft.xmlhttp"); 
         xmlhttp.Open("GET",URL, false);  
         try {  
