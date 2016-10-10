@@ -313,5 +313,31 @@ var XSUtil = {
                 return(false); 
             } 
         } 
+    },
+
+    
+    // 判断是否是字符串
+    isString: function (obj) { 
+        return typeof obj == 'string';
+    },
+    // 判断是否是数组
+    isArray: function (obj) { 
+        return Array.isArray(obj);
+    },
+    // 判断是否是函数
+    isFunction: function (value) { 
+        return typeof value == 'function';
+    },
+    // 判断是否是window
+    isWindow: function (obj) { 
+        return obj != null && obj == obj.window;
+    },
+    // 判断是否document
+    isDocument: function (obj)   { 
+        return obj != null && obj.nodeType == obj.DOCUMENT_NODE;
+    },
+    // 判断是否是obj
+    isObject: function (obj) { 
+        return type(obj) == "object";
     }
 };
