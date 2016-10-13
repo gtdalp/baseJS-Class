@@ -339,5 +339,19 @@ var XSUtil = {
     // 判断是否是obj
     isObject: function (obj) { 
         return type(obj) == "object";
+    },
+    // 不用四舍五入 截取字符串2位数
+    toFixed: function (val) {
+        val = val.toString();
+        if (val.indexOf('.') === -1) {
+            val = val + '.00';
+        } else {
+            val = val.substring(0, val.lastIndexOf('.') + 3);
+        }
+        var str = val.split('.');
+        if (str[1].length === 1) {
+            val = val + '0';
+        }
+        return val;
     }
 };
