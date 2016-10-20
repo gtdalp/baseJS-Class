@@ -55,12 +55,13 @@ var XSUtil = {
     *
     *************************/
     inputChange : function( ele, cb ) {
-        var dom = $("#"+ele)[0];
-        if(dom == undefined) return;
-        if( "\v" == "v" ) {
-            dom.onpropertychange = cb;
-        }else{
-            dom.addEventListener("input", cb, false);
+        var dom = document.querySelector(ele);
+        if (dom) {
+            if( "\v" == "v" ) {
+                dom.onpropertychange = cb;
+            }else{
+                dom.addEventListener("input", cb, false);
+            }
         }
         return cb;
     },
