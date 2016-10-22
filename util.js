@@ -355,3 +355,4 @@ var XSUtil = {
         return val;
     }
 };
+module.exports = XSUtil;
