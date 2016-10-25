@@ -386,5 +386,9 @@ var XSUtil = {
             return s.getFullYear() + '年' + (s.getMonth() + 1) + "月" + s.getDate() + "日 " + s.getHours() + ':' + ':' + s.getMinutes() + ':' + s.getSeconds();
         }
     },
+    // 判断是否是数字类型
+    isNumber: function (n) {
+        return typeof n === 'number' || !!(n && !isNaN(n));
+    }
 };
 module.exports = XSUtil;
