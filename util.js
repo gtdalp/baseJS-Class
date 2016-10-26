@@ -389,6 +389,10 @@ var XSUtil = {
     // 判断是否是数字类型
     isNumber: function (n) {
         return typeof n === 'number' || !!(n && !isNaN(n));
+    },
+    // 判断是否是对象
+    isObject: function () {
+        return !!(o && typeof o === 'object' && o.constructor !== Array && o.constructor !== Date);
     }
 };
 module.exports = XSUtil;
