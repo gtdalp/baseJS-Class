@@ -393,6 +393,18 @@ var XSUtil = {
     // 判断是否是对象
     isObject: function () {
         return !!(o && typeof o === 'object' && o.constructor !== Array && o.constructor !== Date);
+    },
+    // 判断class是否存在
+    hasClass: function (dom, cls) {
+        if (!dom) {
+            return false;
+        }
+        var arr = dom.className.split(' ');
+        if (arr.indexOf(cls) === 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 module.exports = XSUtil;
