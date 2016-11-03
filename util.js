@@ -396,15 +396,11 @@ var XSUtil = {
     },
     // 判断class是否存在
     hasClass: function (dom, cls) {
-        if (!dom || !cls || !dom.className) {
+        if (!dom || !dom.className || !cls) {
             return false;
         }
         var arr = dom.className.split(' ');
-        if (arr.indexOf(cls) === 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return arr.indexOf(cls) === 0;
     }
 };
 module.exports = XSUtil;
