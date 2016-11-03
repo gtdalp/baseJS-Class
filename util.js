@@ -396,7 +396,7 @@ var XSUtil = {
     },
     // 判断class是否存在
     hasClass: function (dom, cls) {
-        if (!dom) {
+        if (!dom || !cls || !dom.className) {
             return false;
         }
         var arr = dom.className.split(' ');
