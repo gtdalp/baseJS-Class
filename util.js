@@ -395,12 +395,14 @@ var XSUtil = {
         return !!(o && typeof o === 'object' && o.constructor !== Array && o.constructor !== Date);
     },
     // 判断class是否存在
-    hasClass: function (dom, cls) {
-        if (!dom || !dom.className || !cls) {
+    hasClass: function (node, cls) {
+        if (typeof node === 'string') {
+            node = document.querySelector(node);
+        }
+        if (!node || !node.className || !cls) {
             return false;
         }
-        var arr = dom.className.split(' ');
-        return arr.indexOf(cls) === 0;
+        return node.className.split(' ').indexOf(cls) >= 0;
     }
 };
 module.exports = XSUtil;
