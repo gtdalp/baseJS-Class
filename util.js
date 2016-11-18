@@ -403,6 +403,20 @@ var XSUtil = {
             return false;
         }
         return node.className.split(' ').indexOf(cls) >= 0;
+    },
+    // 获取element的宽高和定位
+    getRect: function () {
+        var rect = element.getBoundingClientRect();
+        var top = document.documentElement.clientTop;
+        var left= document.documentElement.clientLeft;
+        return{
+            top    :   rect.top - top,
+            bottom :   rect.bottom - top,
+            left   :   rect.left - left,
+            right  :   rect.right - left,
+            width  :   rect.width,
+            height :   rect.bottom - rect.top
+        }
     }
 };
 module.exports = XSUtil;
