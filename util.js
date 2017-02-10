@@ -417,6 +417,32 @@ var XSUtil = {
             width  :   rect.width,
             height :   rect.bottom - rect.top
         }
+    },
+    // hash方法 数组去重
+    unique: function (arr) {
+        if (!Array.isArray(arr)) arr = [];
+        if (!Array.prototype.unique) {
+            Array.prototype.unique = function () {
+                var hash   = {},
+                    result = [],
+                    type   = '',
+                    i      = 0,
+                    len    = this.length,
+                    item;
+                for (; i < len; i++) {
+                    item = this[i];
+                    type = Object.prototype.toString.call(item);
+
+                    if (!hash[item + type]) {
+                        hash[item + type] = true;
+                        result.push(item);
+                    }
+                }
+
+                return result;
+            }
+        }
+        return arr.unique();
     }
 };
 module.exports = XSUtil;
