@@ -54,17 +54,18 @@ var XSUtil = {
     * @return       {function}  cb   回调函数
     *
     *************************/
-    inputChange : function( ele, cb ) {
-        var dom = document.querySelector(ele);
-        if (!dom.addEventListener) return;
-        if( "\v" == "v" ) {
-            dom.onpropertychange = cb;
-        }else{
-            dom.addEventListener("input", cb, false);
+    inputChange : function( id, cb ) {
+        var dom = document.getElementById(id);
+        var callback = function () {
+            cb(dom.value);
         }
-        return cb;
+        if (!dom) return;
+        if( "\v" == "v" ) {
+            dom.onpropertychange = callback;
+        }else{
+            dom.addEventListener("input", callback, false);
+        }
     },
-
     /***********************
     * 验证是否为数字类型
     *
