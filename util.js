@@ -444,6 +444,24 @@ var XSUtil = {
             }
         }
         return arr.unique();
+    },
+    // 获取attr属性和值
+    attr : function (dom, key) {
+        var i = 0,
+            domAttr = dom.attributes,
+            len = domAttr.length,
+            dataF,
+            name,
+            str = '';
+        for (; i < len; i++) {
+            dataF = domAttr[i];
+            name = dataF.name;
+            if (name == key) {
+                str = dataF.nodeValue;
+                break;
+            }
+        }
+        return str;
     }
 };
 module.exports = XSUtil;
