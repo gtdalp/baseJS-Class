@@ -462,6 +462,58 @@ var XSUtil = {
             }
         }
         return str;
+    },
+    // 等比例缩放图片
+    resizeImageScale: function (obj) {
+    // 算出比例返回图片标签字符串
+    var imgTpl = function (o) {
+      var title = o.title ? ' title="' + o.title + '" ' : '',
+          alt = o.alt ? ' alt="' + o.alt + '" ' : '',
+          cls = o.cls ? ' class="' + o.cls + '" ' : '',
+          style = o.style || '',
+          styl = '';
+
+          // 容器宽度
+      var containerW = +o.containerW,
+          // 容器宽度
+          containerH = +o.containerH;
+
+          // 图片宽度
+      var imgW = +o.imgW,
+          // 图片高度
+          imgH = +o.imgH;
+
+          // 压缩比例
+      var scale = Math.max(containerW/imgW, containerH/imgH),
+          // 图片压缩之后宽度
+          w = imgW*scale,
+          // 图片压缩之后高度
+          h = imgH*scale;
+
+      // 宽度溢出
+      if (w > containerW) {
+        styl = 'margin-left:-' + (w-containerW)/2 + 'px;';
+      }
+      //高度溢出
+      if (h > containerH) {
+        styl = 'margin-top:-' + (h-containerH)/2 + 'px;';
+      }
+
+      styl = ' style="' + styl + style + '"';
+
+      return '<img src="' + o.src + '" width="' + w + '" height="' + h + '"' + cls + title + alt + styl + ' />';
     }
+
+
+    var html = '';
+    if (Array.isArray(obj)) {
+      for (var i = 0, len = obj.length; i < len; i++) {
+        html += imgTpl(obj[i]);
+      }
+    } else {
+      html = imgTpl(obj);
+    }
+    return html;
+  }
 };
 module.exports = XSUtil;
