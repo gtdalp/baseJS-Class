@@ -2,7 +2,7 @@
 * 2015-11-30 xisa
 * base class
 **************************/
-var XSUtil = {
+let XSUtil = {
     // 获取时间的某部份
     getDateFn: function(){
         var __date = new Date();
@@ -191,28 +191,6 @@ var XSUtil = {
         }
     },
 
-    /***********************
-    * 解析获取URL参数
-    *
-    * @parmValue    {string}      url   url地址
-    * @parmValue    {string}      key   key值
-    * @return       {string}      返回获取到的key
-    *
-    ***********************/
-    getUrlParm: function(url, key) {
-        var thisUrl = url
-            , parmValue = ""
-            , re = new RegExp(key + "=.*", "i")
-            , mResult = re.exec(thisUrl)
-            ;
-        if(mResult != null) {
-            mResult = mResult[0];
-            if(mResult.indexOf("&") != -1){
-                mResult = mResult.split("&")[0];
-            }
-            return mResult.split("=")[1];
-        }
-    },
 
     /***********************
     * 判断是否为有效的数字
@@ -406,7 +384,7 @@ var XSUtil = {
         return node.className.split(' ').indexOf(cls) >= 0;
     },
     // 获取element的宽高和定位
-    getRect: function () {
+    getRect: function (element) {
         var rect = element.getBoundingClientRect();
         var top = document.documentElement.clientTop;
         var left= document.documentElement.clientLeft;
@@ -464,56 +442,185 @@ var XSUtil = {
         return str;
     },
     // 等比例缩放图片
+    /*
+    obj = {
+        title: '',
+        alt: '',
+        cls: '',
+        style: ''
+    }
+    */
     resizeImageScale: function (obj) {
-    // 算出比例返回图片标签字符串
-    var imgTpl = function (o) {
-      var title = o.title ? ' title="' + o.title + '" ' : '',
-          alt = o.alt ? ' alt="' + o.alt + '" ' : '',
-          cls = o.cls ? ' class="' + o.cls + '" ' : '',
-          style = o.style || '',
-          styl = '';
+        // 算出比例返回图片标签字符串
+        var imgTpl = function (o) {
+          var title = o.title ? ' title="' + o.title + '" ' : '',
+              alt = o.alt ? ' alt="' + o.alt + '" ' : '',
+              cls = o.cls ? ' class="' + o.cls + '" ' : '',
+              style = o.style || '',
+              styl = '';
 
-          // 容器宽度
-      var containerW = +o.containerW,
-          // 容器宽度
-          containerH = +o.containerH;
+              // 容器宽度
+          var containerW = +o.containerW,
+              // 容器宽度
+              containerH = +o.containerH;
 
-          // 图片宽度
-      var imgW = +o.imgW,
-          // 图片高度
-          imgH = +o.imgH;
+              // 图片宽度
+          var imgW = +o.imgW,
+              // 图片高度
+              imgH = +o.imgH;
 
-          // 压缩比例
-      var scale = Math.max(containerW/imgW, containerH/imgH),
-          // 图片压缩之后宽度
-          w = imgW*scale,
-          // 图片压缩之后高度
-          h = imgH*scale;
+              // 压缩比例
+          var scale = Math.max(containerW/imgW, containerH/imgH),
+              // 图片压缩之后宽度
+              w = imgW*scale,
+              // 图片压缩之后高度
+              h = imgH*scale;
 
-      // 宽度溢出
-      if (w > containerW) {
-        styl = 'margin-left:-' + (w-containerW)/2 + 'px;';
-      }
-      //高度溢出
-      if (h > containerH) {
-        styl = 'margin-top:-' + (h-containerH)/2 + 'px;';
-      }
+          // 宽度溢出
+          if (w > containerW) {
+            styl = 'margin-left:-' + (w-containerW)/2 + 'px;';
+          }
+          //高度溢出
+          if (h > containerH) {
+            styl = 'margin-top:-' + (h-containerH)/2 + 'px;';
+          }
 
-      styl = ' style="' + styl + style + '"';
+          styl = ' style="' + styl + style + '"';
 
-      return '<img src="' + o.src + '" width="' + w + '" height="' + h + '"' + cls + title + alt + styl + ' />';
-    }
+          return '<img src="' + o.src + '" width="' + w + '" height="' + h + '"' + cls + title + alt + styl + ' />';
+        }
 
 
-    var html = '';
-    if (Array.isArray(obj)) {
-      for (var i = 0, len = obj.length; i < len; i++) {
-        html += imgTpl(obj[i]);
-      }
-    } else {
-      html = imgTpl(obj);
-    }
-    return html;
-  }
+        var html = '';
+        if (Array.isArray(obj)) {
+          for (var i = 0, len = obj.length; i < len; i++) {
+            html += imgTpl(obj[i]);
+          }
+        } else {
+          html = imgTpl(obj);
+        }
+        return html;
+    },
+    
+    /***********************
+    * 解析获取URL参数
+    *
+    * @parmValue    {string}      url   url地址
+    * @parmValue    {string}      key   key值
+    * @return       {string}      返回获取到的key
+    *
+    ***********************/
+    getUrlParm: function(url, key) {
+        var thisUrl = url
+            , parmValue = ""
+            , re = new RegExp(key + "=.*", "i")
+            , mResult = re.exec(thisUrl)
+            ;
+        if(mResult != null) {
+            mResult = mResult[0];
+            if(mResult.indexOf("&") != -1){
+                mResult = mResult.split("&")[0];
+            }
+            return mResult.split("=")[1];
+        }
+    },
+    // 旧方法获取url参数
+    requestParaMap () {
+        var id = location.search;
+        if (id == "" || id == null || typeof id == "undefined") {
+            id = "";
+        }
+        var arrayObj = id.match(/([^?=&]+)(=([^&]*))?/g);
+        var returnMap = {};
+        if (arrayObj == null) return returnMap;
+        for (var i = 0; i < arrayObj.length; i++) {
+            var conment = arrayObj[i];
+            var key = decodeURIComponent(conment.substring(0, conment.indexOf("=")));
+            var value = decodeURIComponent(conment.substring(conment.indexOf("=") + 1, conment.length));
+            returnMap[key] = value;
+        };
+        if(id == "undefined") {
+            return null;
+        }else{
+            return returnMap;
+        }
+    },
+    // 获取浏览器url中的key
+    getParam (name) {
+        let map = XSUtil.requestParaMap();
+        if (name && map) {
+            map = map[name];
+            if (!map) {
+                let after = window.location.hash.split("?")[1];
+                if (after) {
+                    let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                    let r = after.match(reg);
+                    if (r != null) {
+                        return  decodeURIComponent(r[2]);
+                    } else {
+                        return null;
+                    }
+                }
+            } else {
+                return map;
+            }
+        } else {
+            return null;
+        }
+    },
+    // 判断IE浏览器
+    jugdeIE () {
+        var browser=navigator.appName 
+        var b_version=navigator.appVersion 
+        var version=b_version.split(";") || ''; 
+        var trim_Version=(version[1] || '').replace(/[ ]/g,""); 
+        var type = "chrome";
+        if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE6.0") { 
+            type = "6";
+        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0") { 
+            type = "7"; 
+        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE8.0") { 
+            type = "8";
+        } else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0") { 
+            type = "9"; 
+        } 
+        return type;
+    },
+    // 路由跳转下一页
+    nextPage : function( str, param ) {
+        var $nativeApi = {}, nextUrl = '';
+        var route = configObj.route;
+        var curl = window.location.href.split('?')[0];
+        if( route == undefined ) {
+            if( param == "" || param == undefined ) {
+                //window.location.href = url;
+                nextUrl = str;
+            }else{
+                var ustr = '?';
+                var index = 0;
+                for( var key in param ) {
+                    if( index > 0 ) {
+                        ustr += "&"+key;
+                        ustr += "=" + param[key];
+                    }else{
+                        ustr += key;
+                        ustr += "=" + param[key];
+                    }
+                    index++;
+                }   
+                nextUrl += ustr;
+            }
+        }else{
+            var url = route[str];
+            if(url){
+                nextUrl = parseParam(url, param);
+            } else {
+                // nextUrl = str;
+                nextUrl = route['404'];
+            }
+        }
+        $nativeApi.go(nextUrl);
+    },
+    
 };
-module.exports = XSUtil;
+window.XSUtil = XSUtil;
