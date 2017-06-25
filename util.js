@@ -621,6 +621,51 @@ let XSUtil = {
         }
         $nativeApi.go(nextUrl);
     },
+    // 获取当前系统实时时间
+    getDateTime (id) {
+        
+        let fn = function () {
+            let date = new Date();
+            let str = '星期';
+
+            let y = date.getFullYear() + '';
+            let m = date.getMonth() + 1 + '';
+            let d = date.getDate() + '';
+            let w = date.getDay();
+
+            if (w == 0) {
+                str += '日'
+            } else if (w == 1) {
+                str += '一'
+            } else if (w == 2) {
+                str += '二'
+            } else if (w == 3) {
+                str += '三'
+            } else if (w == 4) {
+                str += '四'
+            } else if (w == 5) {
+                str += '五'
+            } else if (w == 6) {
+                str += '六'
+            }
+            if (m < 10) m = '0' + m;
+            if (d < 10) d = '0' + d;
+
+            let hh = date.getHours() + '';
+            let mm = date.getMinutes() + '';
+            let ss = date.getSeconds() + '';
+
+            if (hh < 10) hh = '0' + hh;
+            if (mm < 10) mm = '0' + mm;
+            if (ss < 10) ss = '0' + ss;
+            
+            document.getElementById(id).innerHTML = y + '-' + m + '-' + d + ' ' + hh + '<span class="time-span-m">:</span>' + mm + '<span class="time-span-m">:</span>' + ss + ' ' + str;
+            setTimeout(function () {
+                fn();
+            }, 1000);
+        }
+        fn();
+    }
     
 };
 window.XSUtil = XSUtil;
