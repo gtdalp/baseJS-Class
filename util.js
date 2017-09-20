@@ -821,6 +821,30 @@ let XSUtil = {
 
       // Return the modified object
       return target;
+    },
+    // 数字数组排序 升降序
+    // var arr = [8,6.5,6,55,0,10];
+    // 升序 
+    // sort(arr)
+    // 降序序
+    // sort(arr, true)
+    sort: function (arr, flg) {
+        function compareUp(value1, value2) {
+            return value1 - value2;
+        }
+        function compareDown(value1, value2) {
+            return value2 - value1;
+        }
+        if (Array.isArray(arr)) {
+            if (flg) {
+               return arr.sort(compareDown); 
+            } else {
+                return arr.sort(compareUp);
+            }
+
+        } else {
+            return arr;
+        }
     }
 };
 window.XSUtil = XSUtil;
