@@ -845,6 +845,15 @@ let XSUtil = {
         } else {
             return arr;
         }
+    },
+    // 转换为两个小数点
+    twoPoint: function (i) {
+        if (i == 0) {
+            return '0.00';
+        }
+        var n = i.toString();
+        var len = n.length;
+        return (n.substr(0, len-2) + '.' + n.substr(-2))
     }
 };
 window.XSUtil = XSUtil;
