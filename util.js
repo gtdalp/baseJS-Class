@@ -854,6 +854,19 @@ let XSUtil = {
         var n = i.toString();
         var len = n.length;
         return (n.substr(0, len-2) + '.' + n.substr(-2))
+    },
+    // 深度拷贝对象
+    deepCopy: function (p, c) {
+      var c = c || {};
+      for (let i in p) {
+        if (typeof p[i] === 'object') {
+          c[i] = (p[i].constructor === Array) ? [] : {};
+          deepCopy(p[i], c[i]);
+        } else {
+          c[i] = p[i];
+        }
+      };
+      return c;
     }
 };
 window.XSUtil = XSUtil;
